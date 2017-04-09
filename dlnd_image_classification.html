@@ -12244,7 +12244,7 @@ height=250
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
@@ -12301,7 +12301,7 @@ height=250
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
@@ -12390,7 +12390,7 @@ Keep Prob Tests Passed.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">conv2d_maxpool</span><span class="p">(</span><span class="n">x_tensor</span><span class="p">,</span> <span class="n">conv_num_outputs</span><span class="p">,</span> <span class="n">conv_ksize</span><span class="p">,</span> <span class="n">conv_strides</span><span class="p">,</span> <span class="n">pool_ksize</span><span class="p">,</span> <span class="n">pool_strides</span><span class="p">):</span>
@@ -12464,7 +12464,7 @@ Keep Prob Tests Passed.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">flatten</span><span class="p">(</span><span class="n">x_tensor</span><span class="p">):</span>
@@ -12516,7 +12516,7 @@ Keep Prob Tests Passed.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">fully_conn</span><span class="p">(</span><span class="n">x_tensor</span><span class="p">,</span> <span class="n">num_outputs</span><span class="p">):</span>
@@ -12526,8 +12526,12 @@ Keep Prob Tests Passed.
 <span class="sd">    : num_outputs: The number of output that the new tensor should be.</span>
 <span class="sd">    : return: A 2-D tensor where the second dimension is num_outputs.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">relu</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x_tensor</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">relu</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">x_tensor</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">num_outputs</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;fully_connected&#39;</span><span class="p">)</span>
+    <span class="n">weight</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">truncated_normal</span><span class="p">([</span><span class="n">x_tensor</span><span class="o">.</span><span class="n">get_shape</span><span class="p">()</span><span class="o">.</span><span class="n">as_list</span><span class="p">()[</span><span class="mi">1</span><span class="p">],</span> <span class="n">num_outputs</span><span class="p">]))</span>
+    <span class="n">bias</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">num_outputs</span><span class="p">]))</span>
+
+    <span class="n">activation</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">x_tensor</span><span class="p">,</span> <span class="n">weight</span><span class="p">)</span> <span class="o">+</span> <span class="n">bias</span>
+
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">activation</span><span class="p">)</span>
 
 
 <span class="sd">&quot;&quot;&quot;</span>
@@ -12570,7 +12574,7 @@ Keep Prob Tests Passed.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">output</span><span class="p">(</span><span class="n">x_tensor</span><span class="p">,</span> <span class="n">num_outputs</span><span class="p">):</span>
@@ -12633,7 +12637,7 @@ Keep Prob Tests Passed.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">conv_net</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">):</span>
@@ -12659,19 +12663,22 @@ Keep Prob Tests Passed.
     <span class="c1"># Apply a Flatten Layer</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">flatten</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
 
-
     <span class="c1"># TODO: Apply 1, 2, or 3 Fully Connected Layers</span>
     <span class="c1">#    Play around with different number of outputs</span>
     <span class="c1"># Function Definition from Above:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">fully_conn</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">fully_conn</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">fully_conn</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
     
+    <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">)</span>
+
     <span class="c1"># TODO: Apply an Output Layer</span>
     <span class="c1">#    Set this to the number of classes</span>
     <span class="c1"># Function Definition from Above:</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">output</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
     
     <span class="c1"># TODO: return output</span>
-    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">model</span>
 
 
 <span class="sd">&quot;&quot;&quot;</span>
@@ -12747,7 +12754,7 @@ Keep Prob Tests Passed.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">train_neural_network</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">keep_probability</span><span class="p">,</span> <span class="n">feature_batch</span><span class="p">,</span> <span class="n">label_batch</span><span class="p">):</span>
@@ -12761,7 +12768,6 @@ Keep Prob Tests Passed.
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># TODO: Implement Function</span>
     <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">feature_batch</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">label_batch</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">:</span> <span class="n">keep_probability</span><span class="p">})</span>
-
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">DON&#39;T MODIFY ANYTHING IN THIS CELL THAT IS BELOW THIS LINE</span>
@@ -12802,7 +12808,7 @@ Keep Prob Tests Passed.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In&nbsp;[40]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">print_stats</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">feature_batch</span><span class="p">,</span> <span class="n">label_batch</span><span class="p">,</span> <span class="n">cost</span><span class="p">,</span> <span class="n">accuracy</span><span class="p">):</span>
@@ -12814,11 +12820,10 @@ Keep Prob Tests Passed.
 <span class="sd">    : cost: TensorFlow cost function</span>
 <span class="sd">    : accuracy: TensorFlow accuracy function</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">accuracy_value</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">accuracy</span><span class="p">,</span> <span class="n">feed_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">feature_batch</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">label_batch</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
-    <span class="n">cost_value</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cost</span><span class="p">,</span> <span class="n">feed_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">feature_batch</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">label_batch</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+    <span class="n">accuracy_value</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">accuracy</span><span class="p">,</span> <span class="n">feed_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">valid_features</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">valid_labels</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">})</span>
+    <span class="n">cost_value</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cost</span><span class="p">,</span> <span class="n">feed_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">feature_batch</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">label_batch</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">})</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Cost: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cost_value</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Accuracy: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">accuracy_value</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Accuracy: </span><span class="si">{}</span><span class="s1"> - Cost: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">accuracy_value</span><span class="p">,</span> <span class="n">cost_value</span><span class="p">))</span>
 
     
 </pre></div>
@@ -12851,12 +12856,12 @@ Keep Prob Tests Passed.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="prompt input_prompt">In&nbsp;[44]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># TODO: Tune Parameters</span>
 <span class="n">epochs</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">256</span>
 <span class="n">keep_probability</span> <span class="o">=</span> <span class="mf">0.5</span>
 </pre></div>
 
@@ -12877,7 +12882,7 @@ Keep Prob Tests Passed.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
@@ -12910,146 +12915,16 @@ Keep Prob Tests Passed.
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Checking the Training on a Single Batch...
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">InvalidArgumentError</span>                      Traceback (most recent call last)
-<span class="ansi-green-fg">/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tensorflow/python/client/session.py</span> in <span class="ansi-cyan-fg">_do_call</span><span class="ansi-blue-fg">(self, fn, *args)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1021</span>     <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">-&gt; 1022</span><span class="ansi-red-fg">       </span><span class="ansi-green-fg">return</span> fn<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>args<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1023</span>     <span class="ansi-green-fg">except</span> errors<span class="ansi-blue-fg">.</span>OpError <span class="ansi-green-fg">as</span> e<span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tensorflow/python/client/session.py</span> in <span class="ansi-cyan-fg">_run_fn</span><span class="ansi-blue-fg">(session, feed_dict, fetch_list, target_list, options, run_metadata)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1003</span>                                  feed_dict<span class="ansi-blue-fg">,</span> fetch_list<span class="ansi-blue-fg">,</span> target_list<span class="ansi-blue-fg">,</span>
-<span class="ansi-green-fg">-&gt; 1004</span><span class="ansi-red-fg">                                  status, run_metadata)
-</span><span class="ansi-green-intense-fg ansi-bold">   1005</span> 
-
-<span class="ansi-green-fg">/Users/MS/anaconda/envs/deep_learning/lib/python3.6/contextlib.py</span> in <span class="ansi-cyan-fg">__exit__</span><span class="ansi-blue-fg">(self, type, value, traceback)</span>
-<span class="ansi-green-intense-fg ansi-bold">     88</span>             <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">---&gt; 89</span><span class="ansi-red-fg">                 </span>next<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>gen<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     90</span>             <span class="ansi-green-fg">except</span> StopIteration<span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tensorflow/python/framework/errors_impl.py</span> in <span class="ansi-cyan-fg">raise_exception_on_not_ok_status</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">    468</span>           compat<span class="ansi-blue-fg">.</span>as_text<span class="ansi-blue-fg">(</span>pywrap_tensorflow<span class="ansi-blue-fg">.</span>TF_Message<span class="ansi-blue-fg">(</span>status<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span>
-<span class="ansi-green-fg">--&gt; 469</span><span class="ansi-red-fg">           pywrap_tensorflow.TF_GetCode(status))
-</span><span class="ansi-green-intense-fg ansi-bold">    470</span>   <span class="ansi-green-fg">finally</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-red-fg">InvalidArgumentError</span>: Input to reshape is a tensor with 6400 values, but the requested shape has 1280
-	 [[Node: fully_connected = Reshape[T=DT_FLOAT, Tshape=DT_INT32, _device=&#34;/job:localhost/replica:0/task:0/cpu:0&#34;](Relu_3, fully_connected/shape)]]
-
-During handling of the above exception, another exception occurred:
-
-<span class="ansi-red-fg">InvalidArgumentError</span>                      Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-33-0ebd1bbc35ad&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">     11</span>         batch_i <span class="ansi-blue-fg">=</span> <span class="ansi-cyan-fg">1</span>
-<span class="ansi-green-intense-fg ansi-bold">     12</span>         <span class="ansi-green-fg">for</span> batch_features<span class="ansi-blue-fg">,</span> batch_labels <span class="ansi-green-fg">in</span> helper<span class="ansi-blue-fg">.</span>load_preprocess_training_batch<span class="ansi-blue-fg">(</span>batch_i<span class="ansi-blue-fg">,</span> batch_size<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">---&gt; 13</span><span class="ansi-red-fg">             </span>train_neural_network<span class="ansi-blue-fg">(</span>sess<span class="ansi-blue-fg">,</span> optimizer<span class="ansi-blue-fg">,</span> keep_probability<span class="ansi-blue-fg">,</span> batch_features<span class="ansi-blue-fg">,</span> batch_labels<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     14</span>         print<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;Epoch {:&gt;2}, CIFAR-10 Batch {}:  &#39;</span><span class="ansi-blue-fg">.</span>format<span class="ansi-blue-fg">(</span>epoch <span class="ansi-blue-fg">+</span> <span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">,</span> batch_i<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span> end<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#39;&#39;</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     15</span>         print_stats<span class="ansi-blue-fg">(</span>sess<span class="ansi-blue-fg">,</span> batch_features<span class="ansi-blue-fg">,</span> batch_labels<span class="ansi-blue-fg">,</span> cost<span class="ansi-blue-fg">,</span> accuracy<span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">&lt;ipython-input-26-1a7f7cccc68f&gt;</span> in <span class="ansi-cyan-fg">train_neural_network</span><span class="ansi-blue-fg">(session, optimizer, keep_probability, feature_batch, label_batch)</span>
-<span class="ansi-green-intense-fg ansi-bold">      9</span>     &#34;&#34;&#34;
-<span class="ansi-green-intense-fg ansi-bold">     10</span>     <span class="ansi-red-fg"># TODO: Implement Function</span>
-<span class="ansi-green-fg">---&gt; 11</span><span class="ansi-red-fg">     </span>session<span class="ansi-blue-fg">.</span>run<span class="ansi-blue-fg">(</span>optimizer<span class="ansi-blue-fg">,</span> feed_dict<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">{</span>x<span class="ansi-blue-fg">:</span> feature_batch<span class="ansi-blue-fg">,</span> y<span class="ansi-blue-fg">:</span> label_batch<span class="ansi-blue-fg">,</span> keep_prob<span class="ansi-blue-fg">:</span> keep_probability<span class="ansi-blue-fg">}</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     12</span> 
-<span class="ansi-green-intense-fg ansi-bold">     13</span> 
-
-<span class="ansi-green-fg">/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tensorflow/python/client/session.py</span> in <span class="ansi-cyan-fg">run</span><span class="ansi-blue-fg">(self, fetches, feed_dict, options, run_metadata)</span>
-<span class="ansi-green-intense-fg ansi-bold">    765</span>     <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    766</span>       result = self._run(None, fetches, feed_dict, options_ptr,
-<span class="ansi-green-fg">--&gt; 767</span><span class="ansi-red-fg">                          run_metadata_ptr)
-</span><span class="ansi-green-intense-fg ansi-bold">    768</span>       <span class="ansi-green-fg">if</span> run_metadata<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    769</span>         proto_data <span class="ansi-blue-fg">=</span> tf_session<span class="ansi-blue-fg">.</span>TF_GetBuffer<span class="ansi-blue-fg">(</span>run_metadata_ptr<span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tensorflow/python/client/session.py</span> in <span class="ansi-cyan-fg">_run</span><span class="ansi-blue-fg">(self, handle, fetches, feed_dict, options, run_metadata)</span>
-<span class="ansi-green-intense-fg ansi-bold">    963</span>     <span class="ansi-green-fg">if</span> final_fetches <span class="ansi-green-fg">or</span> final_targets<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    964</span>       results = self._do_run(handle, final_targets, final_fetches,
-<span class="ansi-green-fg">--&gt; 965</span><span class="ansi-red-fg">                              feed_dict_string, options, run_metadata)
-</span><span class="ansi-green-intense-fg ansi-bold">    966</span>     <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    967</span>       results <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">]</span>
-
-<span class="ansi-green-fg">/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tensorflow/python/client/session.py</span> in <span class="ansi-cyan-fg">_do_run</span><span class="ansi-blue-fg">(self, handle, target_list, fetch_list, feed_dict, options, run_metadata)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1013</span>     <span class="ansi-green-fg">if</span> handle <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">   1014</span>       return self._do_call(_run_fn, self._session, feed_dict, fetch_list,
-<span class="ansi-green-fg">-&gt; 1015</span><span class="ansi-red-fg">                            target_list, options, run_metadata)
-</span><span class="ansi-green-intense-fg ansi-bold">   1016</span>     <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">   1017</span>       return self._do_call(_prun_fn, self._session, handle, feed_dict,
-
-<span class="ansi-green-fg">/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tensorflow/python/client/session.py</span> in <span class="ansi-cyan-fg">_do_call</span><span class="ansi-blue-fg">(self, fn, *args)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1033</span>         <span class="ansi-green-fg">except</span> KeyError<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">   1034</span>           <span class="ansi-green-fg">pass</span>
-<span class="ansi-green-fg">-&gt; 1035</span><span class="ansi-red-fg">       </span><span class="ansi-green-fg">raise</span> type<span class="ansi-blue-fg">(</span>e<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">(</span>node_def<span class="ansi-blue-fg">,</span> op<span class="ansi-blue-fg">,</span> message<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1036</span> 
-<span class="ansi-green-intense-fg ansi-bold">   1037</span>   <span class="ansi-green-fg">def</span> _extend_graph<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-red-fg">InvalidArgumentError</span>: Input to reshape is a tensor with 6400 values, but the requested shape has 1280
-	 [[Node: fully_connected = Reshape[T=DT_FLOAT, Tshape=DT_INT32, _device=&#34;/job:localhost/replica:0/task:0/cpu:0&#34;](Relu_3, fully_connected/shape)]]
-
-Caused by op &#39;fully_connected&#39;, defined at:
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/runpy.py&#34;, line 193, in _run_module_as_main
-    &#34;__main__&#34;, mod_spec)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/runpy.py&#34;, line 85, in _run_code
-    exec(code, run_globals)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/ipykernel/__main__.py&#34;, line 3, in &lt;module&gt;
-    app.launch_new_instance()
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/traitlets/config/application.py&#34;, line 658, in launch_instance
-    app.start()
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/ipykernel/kernelapp.py&#34;, line 474, in start
-    ioloop.IOLoop.instance().start()
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/zmq/eventloop/ioloop.py&#34;, line 177, in start
-    super(ZMQIOLoop, self).start()
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tornado/ioloop.py&#34;, line 887, in start
-    handler_func(fd_obj, events)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tornado/stack_context.py&#34;, line 275, in null_wrapper
-    return fn(*args, **kwargs)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/zmq/eventloop/zmqstream.py&#34;, line 440, in _handle_events
-    self._handle_recv()
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/zmq/eventloop/zmqstream.py&#34;, line 472, in _handle_recv
-    self._run_callback(callback, msg)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/zmq/eventloop/zmqstream.py&#34;, line 414, in _run_callback
-    callback(*args, **kwargs)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tornado/stack_context.py&#34;, line 275, in null_wrapper
-    return fn(*args, **kwargs)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/ipykernel/kernelbase.py&#34;, line 276, in dispatcher
-    return self.dispatch_shell(stream, msg)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/ipykernel/kernelbase.py&#34;, line 228, in dispatch_shell
-    handler(stream, idents, msg)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/ipykernel/kernelbase.py&#34;, line 390, in execute_request
-    user_expressions, allow_stdin)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/ipykernel/ipkernel.py&#34;, line 196, in do_execute
-    res = shell.run_cell(code, store_history=store_history, silent=silent)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/ipykernel/zmqshell.py&#34;, line 501, in run_cell
-    return super(ZMQInteractiveShell, self).run_cell(*args, **kwargs)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/IPython/core/interactiveshell.py&#34;, line 2717, in run_cell
-    interactivity=interactivity, compiler=compiler, result=result)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/IPython/core/interactiveshell.py&#34;, line 2821, in run_ast_nodes
-    if self.run_code(code, result):
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/IPython/core/interactiveshell.py&#34;, line 2881, in run_code
-    exec(code_obj, self.user_global_ns, self.user_ns)
-  File &#34;&lt;ipython-input-29-2efdf5382e65&gt;&#34;, line 56, in &lt;module&gt;
-    logits = conv_net(x, keep_prob)
-  File &#34;&lt;ipython-input-29-2efdf5382e65&gt;&#34;, line 28, in conv_net
-    model = fully_conn(model, 20)
-  File &#34;&lt;ipython-input-15-242a00e8db87&gt;&#34;, line 9, in fully_conn
-    return tf.reshape(relu, shape=[tf.shape(x_tensor)[0], num_outputs], name=&#39;fully_connected&#39;)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tensorflow/python/ops/gen_array_ops.py&#34;, line 2630, in reshape
-    name=name)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tensorflow/python/framework/op_def_library.py&#34;, line 763, in apply_op
-    op_def=op_def)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tensorflow/python/framework/ops.py&#34;, line 2395, in create_op
-    original_op=self._default_original_op, op_def=op_def)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tensorflow/python/framework/ops.py&#34;, line 1264, in __init__
-    self._traceback = _extract_stack()
-
-InvalidArgumentError (see above for traceback): Input to reshape is a tensor with 6400 values, but the requested shape has 1280
-	 [[Node: fully_connected = Reshape[T=DT_FLOAT, Tshape=DT_INT32, _device=&#34;/job:localhost/replica:0/task:0/cpu:0&#34;](Relu_3, fully_connected/shape)]]
+Epoch  1, CIFAR-10 Batch 1:  Accuracy: 0.10540000349283218 - Cost: 7277.43505859375
+Epoch  2, CIFAR-10 Batch 1:  Accuracy: 0.10140000283718109 - Cost: 1913.40234375
+Epoch  3, CIFAR-10 Batch 1:  Accuracy: 0.10279999673366547 - Cost: 373.5758361816406
+Epoch  4, CIFAR-10 Batch 1:  Accuracy: 0.10540000349283218 - Cost: 64.95612335205078
+Epoch  5, CIFAR-10 Batch 1:  Accuracy: 0.10400000214576721 - Cost: 12.19714069366455
+Epoch  6, CIFAR-10 Batch 1:  Accuracy: 0.10100000351667404 - Cost: 2.1892895698547363
+Epoch  7, CIFAR-10 Batch 1:  Accuracy: 0.10119999945163727 - Cost: 2.2485175132751465
+Epoch  8, CIFAR-10 Batch 1:  Accuracy: 0.1005999967455864 - Cost: 2.2483038902282715
+Epoch  9, CIFAR-10 Batch 1:  Accuracy: 0.10100000351667404 - Cost: 2.2480902671813965
+Epoch 10, CIFAR-10 Batch 1:  Accuracy: 0.10100000351667404 - Cost: 2.24787974357605
 </pre>
 </div>
 </div>
@@ -13070,7 +12945,7 @@ InvalidArgumentError (see above for traceback): Input to reshape is a tensor wit
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[127]:</div>
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
@@ -13111,146 +12986,106 @@ InvalidArgumentError (see above for traceback): Input to reshape is a tensor wit
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Training...
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">InvalidArgumentError</span>                      Traceback (most recent call last)
-<span class="ansi-green-fg">/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tensorflow/python/client/session.py</span> in <span class="ansi-cyan-fg">_do_call</span><span class="ansi-blue-fg">(self, fn, *args)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1021</span>     <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">-&gt; 1022</span><span class="ansi-red-fg">       </span><span class="ansi-green-fg">return</span> fn<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>args<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1023</span>     <span class="ansi-green-fg">except</span> errors<span class="ansi-blue-fg">.</span>OpError <span class="ansi-green-fg">as</span> e<span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tensorflow/python/client/session.py</span> in <span class="ansi-cyan-fg">_run_fn</span><span class="ansi-blue-fg">(session, feed_dict, fetch_list, target_list, options, run_metadata)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1003</span>                                  feed_dict<span class="ansi-blue-fg">,</span> fetch_list<span class="ansi-blue-fg">,</span> target_list<span class="ansi-blue-fg">,</span>
-<span class="ansi-green-fg">-&gt; 1004</span><span class="ansi-red-fg">                                  status, run_metadata)
-</span><span class="ansi-green-intense-fg ansi-bold">   1005</span> 
-
-<span class="ansi-green-fg">/Users/MS/anaconda/envs/deep_learning/lib/python3.6/contextlib.py</span> in <span class="ansi-cyan-fg">__exit__</span><span class="ansi-blue-fg">(self, type, value, traceback)</span>
-<span class="ansi-green-intense-fg ansi-bold">     88</span>             <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">---&gt; 89</span><span class="ansi-red-fg">                 </span>next<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>gen<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     90</span>             <span class="ansi-green-fg">except</span> StopIteration<span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tensorflow/python/framework/errors_impl.py</span> in <span class="ansi-cyan-fg">raise_exception_on_not_ok_status</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">    468</span>           compat<span class="ansi-blue-fg">.</span>as_text<span class="ansi-blue-fg">(</span>pywrap_tensorflow<span class="ansi-blue-fg">.</span>TF_Message<span class="ansi-blue-fg">(</span>status<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span>
-<span class="ansi-green-fg">--&gt; 469</span><span class="ansi-red-fg">           pywrap_tensorflow.TF_GetCode(status))
-</span><span class="ansi-green-intense-fg ansi-bold">    470</span>   <span class="ansi-green-fg">finally</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-red-fg">InvalidArgumentError</span>: Input to reshape is a tensor with 6400 values, but the requested shape has 1280
-	 [[Node: fully_connected = Reshape[T=DT_FLOAT, Tshape=DT_INT32, _device=&#34;/job:localhost/replica:0/task:0/cpu:0&#34;](reshape, fully_connected/shape)]]
-
-During handling of the above exception, another exception occurred:
-
-<span class="ansi-red-fg">InvalidArgumentError</span>                      Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-127-9df3032ebe9d&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">     15</span>         <span class="ansi-green-fg">for</span> batch_i <span class="ansi-green-fg">in</span> range<span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">,</span> n_batches <span class="ansi-blue-fg">+</span> <span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">     16</span>             <span class="ansi-green-fg">for</span> batch_features<span class="ansi-blue-fg">,</span> batch_labels <span class="ansi-green-fg">in</span> helper<span class="ansi-blue-fg">.</span>load_preprocess_training_batch<span class="ansi-blue-fg">(</span>batch_i<span class="ansi-blue-fg">,</span> batch_size<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">---&gt; 17</span><span class="ansi-red-fg">                 </span>train_neural_network<span class="ansi-blue-fg">(</span>sess<span class="ansi-blue-fg">,</span> optimizer<span class="ansi-blue-fg">,</span> keep_probability<span class="ansi-blue-fg">,</span> batch_features<span class="ansi-blue-fg">,</span> batch_labels<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     18</span>             print<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;Epoch {:&gt;2}, CIFAR-10 Batch {}:  &#39;</span><span class="ansi-blue-fg">.</span>format<span class="ansi-blue-fg">(</span>epoch <span class="ansi-blue-fg">+</span> <span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">,</span> batch_i<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span> end<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#39;&#39;</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     19</span>             print_stats<span class="ansi-blue-fg">(</span>sess<span class="ansi-blue-fg">,</span> batch_features<span class="ansi-blue-fg">,</span> batch_labels<span class="ansi-blue-fg">,</span> cost<span class="ansi-blue-fg">,</span> accuracy<span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">&lt;ipython-input-123-1a7f7cccc68f&gt;</span> in <span class="ansi-cyan-fg">train_neural_network</span><span class="ansi-blue-fg">(session, optimizer, keep_probability, feature_batch, label_batch)</span>
-<span class="ansi-green-intense-fg ansi-bold">      9</span>     &#34;&#34;&#34;
-<span class="ansi-green-intense-fg ansi-bold">     10</span>     <span class="ansi-red-fg"># TODO: Implement Function</span>
-<span class="ansi-green-fg">---&gt; 11</span><span class="ansi-red-fg">     </span>session<span class="ansi-blue-fg">.</span>run<span class="ansi-blue-fg">(</span>optimizer<span class="ansi-blue-fg">,</span> feed_dict<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">{</span>x<span class="ansi-blue-fg">:</span> feature_batch<span class="ansi-blue-fg">,</span> y<span class="ansi-blue-fg">:</span> label_batch<span class="ansi-blue-fg">,</span> keep_prob<span class="ansi-blue-fg">:</span> keep_probability<span class="ansi-blue-fg">}</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     12</span> 
-<span class="ansi-green-intense-fg ansi-bold">     13</span> 
-
-<span class="ansi-green-fg">/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tensorflow/python/client/session.py</span> in <span class="ansi-cyan-fg">run</span><span class="ansi-blue-fg">(self, fetches, feed_dict, options, run_metadata)</span>
-<span class="ansi-green-intense-fg ansi-bold">    765</span>     <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    766</span>       result = self._run(None, fetches, feed_dict, options_ptr,
-<span class="ansi-green-fg">--&gt; 767</span><span class="ansi-red-fg">                          run_metadata_ptr)
-</span><span class="ansi-green-intense-fg ansi-bold">    768</span>       <span class="ansi-green-fg">if</span> run_metadata<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    769</span>         proto_data <span class="ansi-blue-fg">=</span> tf_session<span class="ansi-blue-fg">.</span>TF_GetBuffer<span class="ansi-blue-fg">(</span>run_metadata_ptr<span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tensorflow/python/client/session.py</span> in <span class="ansi-cyan-fg">_run</span><span class="ansi-blue-fg">(self, handle, fetches, feed_dict, options, run_metadata)</span>
-<span class="ansi-green-intense-fg ansi-bold">    963</span>     <span class="ansi-green-fg">if</span> final_fetches <span class="ansi-green-fg">or</span> final_targets<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    964</span>       results = self._do_run(handle, final_targets, final_fetches,
-<span class="ansi-green-fg">--&gt; 965</span><span class="ansi-red-fg">                              feed_dict_string, options, run_metadata)
-</span><span class="ansi-green-intense-fg ansi-bold">    966</span>     <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    967</span>       results <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">]</span>
-
-<span class="ansi-green-fg">/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tensorflow/python/client/session.py</span> in <span class="ansi-cyan-fg">_do_run</span><span class="ansi-blue-fg">(self, handle, target_list, fetch_list, feed_dict, options, run_metadata)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1013</span>     <span class="ansi-green-fg">if</span> handle <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">   1014</span>       return self._do_call(_run_fn, self._session, feed_dict, fetch_list,
-<span class="ansi-green-fg">-&gt; 1015</span><span class="ansi-red-fg">                            target_list, options, run_metadata)
-</span><span class="ansi-green-intense-fg ansi-bold">   1016</span>     <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">   1017</span>       return self._do_call(_prun_fn, self._session, handle, feed_dict,
-
-<span class="ansi-green-fg">/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tensorflow/python/client/session.py</span> in <span class="ansi-cyan-fg">_do_call</span><span class="ansi-blue-fg">(self, fn, *args)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1033</span>         <span class="ansi-green-fg">except</span> KeyError<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">   1034</span>           <span class="ansi-green-fg">pass</span>
-<span class="ansi-green-fg">-&gt; 1035</span><span class="ansi-red-fg">       </span><span class="ansi-green-fg">raise</span> type<span class="ansi-blue-fg">(</span>e<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">(</span>node_def<span class="ansi-blue-fg">,</span> op<span class="ansi-blue-fg">,</span> message<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1036</span> 
-<span class="ansi-green-intense-fg ansi-bold">   1037</span>   <span class="ansi-green-fg">def</span> _extend_graph<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-red-fg">InvalidArgumentError</span>: Input to reshape is a tensor with 6400 values, but the requested shape has 1280
-	 [[Node: fully_connected = Reshape[T=DT_FLOAT, Tshape=DT_INT32, _device=&#34;/job:localhost/replica:0/task:0/cpu:0&#34;](reshape, fully_connected/shape)]]
-
-Caused by op &#39;fully_connected&#39;, defined at:
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/runpy.py&#34;, line 193, in _run_module_as_main
-    &#34;__main__&#34;, mod_spec)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/runpy.py&#34;, line 85, in _run_code
-    exec(code, run_globals)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/ipykernel/__main__.py&#34;, line 3, in &lt;module&gt;
-    app.launch_new_instance()
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/traitlets/config/application.py&#34;, line 658, in launch_instance
-    app.start()
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/ipykernel/kernelapp.py&#34;, line 474, in start
-    ioloop.IOLoop.instance().start()
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/zmq/eventloop/ioloop.py&#34;, line 177, in start
-    super(ZMQIOLoop, self).start()
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tornado/ioloop.py&#34;, line 887, in start
-    handler_func(fd_obj, events)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tornado/stack_context.py&#34;, line 275, in null_wrapper
-    return fn(*args, **kwargs)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/zmq/eventloop/zmqstream.py&#34;, line 440, in _handle_events
-    self._handle_recv()
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/zmq/eventloop/zmqstream.py&#34;, line 472, in _handle_recv
-    self._run_callback(callback, msg)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/zmq/eventloop/zmqstream.py&#34;, line 414, in _run_callback
-    callback(*args, **kwargs)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tornado/stack_context.py&#34;, line 275, in null_wrapper
-    return fn(*args, **kwargs)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/ipykernel/kernelbase.py&#34;, line 276, in dispatcher
-    return self.dispatch_shell(stream, msg)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/ipykernel/kernelbase.py&#34;, line 228, in dispatch_shell
-    handler(stream, idents, msg)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/ipykernel/kernelbase.py&#34;, line 390, in execute_request
-    user_expressions, allow_stdin)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/ipykernel/ipkernel.py&#34;, line 196, in do_execute
-    res = shell.run_cell(code, store_history=store_history, silent=silent)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/ipykernel/zmqshell.py&#34;, line 501, in run_cell
-    return super(ZMQInteractiveShell, self).run_cell(*args, **kwargs)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/IPython/core/interactiveshell.py&#34;, line 2717, in run_cell
-    interactivity=interactivity, compiler=compiler, result=result)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/IPython/core/interactiveshell.py&#34;, line 2821, in run_ast_nodes
-    if self.run_code(code, result):
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/IPython/core/interactiveshell.py&#34;, line 2881, in run_code
-    exec(code_obj, self.user_global_ns, self.user_ns)
-  File &#34;&lt;ipython-input-122-20a0e13b5e18&gt;&#34;, line 58, in &lt;module&gt;
-    logits = conv_net(x, keep_prob)
-  File &#34;&lt;ipython-input-122-20a0e13b5e18&gt;&#34;, line 28, in conv_net
-    model = fully_conn(model, 20)
-  File &#34;&lt;ipython-input-104-45b844967516&gt;&#34;, line 9, in fully_conn
-    return tf.reshape(x_tensor, shape=[tf.shape(x_tensor)[0], num_outputs], name=&#39;fully_connected&#39;)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tensorflow/python/ops/gen_array_ops.py&#34;, line 2630, in reshape
-    name=name)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tensorflow/python/framework/op_def_library.py&#34;, line 763, in apply_op
-    op_def=op_def)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tensorflow/python/framework/ops.py&#34;, line 2395, in create_op
-    original_op=self._default_original_op, op_def=op_def)
-  File &#34;/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tensorflow/python/framework/ops.py&#34;, line 1264, in __init__
-    self._traceback = _extract_stack()
-
-InvalidArgumentError (see above for traceback): Input to reshape is a tensor with 6400 values, but the requested shape has 1280
-	 [[Node: fully_connected = Reshape[T=DT_FLOAT, Tshape=DT_INT32, _device=&#34;/job:localhost/replica:0/task:0/cpu:0&#34;](reshape, fully_connected/shape)]]
+Epoch  1, CIFAR-10 Batch 1:  Cost: 8558.490234375
+Accuracy: 0.10159999877214432
+Epoch  1, CIFAR-10 Batch 2:  Cost: 5312.4384765625
+Accuracy: 0.11379999667406082
+Epoch  1, CIFAR-10 Batch 3:  Cost: 3941.39306640625
+Accuracy: 0.125
+Epoch  1, CIFAR-10 Batch 4:  Cost: 2828.38671875
+Accuracy: 0.12960000336170197
+Epoch  1, CIFAR-10 Batch 5:  Cost: 1418.0169677734375
+Accuracy: 0.10400000214576721
+Epoch  2, CIFAR-10 Batch 1:  Cost: 533.5133056640625
+Accuracy: 0.11879999935626984
+Epoch  2, CIFAR-10 Batch 2:  Cost: 176.62338256835938
+Accuracy: 0.10480000078678131
+Epoch  2, CIFAR-10 Batch 3:  Cost: 2.1956393718719482
+Accuracy: 0.09780000150203705
+Epoch  2, CIFAR-10 Batch 4:  Cost: 83.4520263671875
+Accuracy: 0.09719999879598618
+Epoch  2, CIFAR-10 Batch 5:  Cost: 10.02061939239502
+Accuracy: 0.09640000015497208
+Epoch  3, CIFAR-10 Batch 1:  Cost: 4.716513156890869
+Accuracy: 0.0957999974489212
+Epoch  3, CIFAR-10 Batch 2:  Cost: 2.313408613204956
+Accuracy: 0.09600000083446503
+Epoch  3, CIFAR-10 Batch 3:  Cost: 2.3096375465393066
+Accuracy: 0.09539999812841415
+Epoch  3, CIFAR-10 Batch 4:  Cost: 2.3020241260528564
+Accuracy: 0.09539999812841415
+Epoch  3, CIFAR-10 Batch 5:  Cost: 2.302687406539917
+Accuracy: 0.0949999988079071
+Epoch  4, CIFAR-10 Batch 1:  Cost: 3.724600315093994
+Accuracy: 0.0949999988079071
+Epoch  4, CIFAR-10 Batch 2:  Cost: 2.3098061084747314
+Accuracy: 0.09459999948740005
+Epoch  4, CIFAR-10 Batch 3:  Cost: 2.3056869506835938
+Accuracy: 0.09480000287294388
+Epoch  4, CIFAR-10 Batch 4:  Cost: 2.301640033721924
+Accuracy: 0.09459999948740005
+Epoch  4, CIFAR-10 Batch 5:  Cost: 2.302135944366455
+Accuracy: 0.09459999948740005
+Epoch  5, CIFAR-10 Batch 1:  Cost: 2.4286108016967773
+Accuracy: 0.09480000287294388
+Epoch  5, CIFAR-10 Batch 2:  Cost: 2.3062517642974854
+Accuracy: 0.09480000287294388
+Epoch  5, CIFAR-10 Batch 3:  Cost: 2.303337812423706
+Accuracy: 0.09459999948740005
+Epoch  5, CIFAR-10 Batch 4:  Cost: 2.301084041595459
+Accuracy: 0.09459999948740005
+Epoch  5, CIFAR-10 Batch 5:  Cost: 2.3029913902282715
+Accuracy: 0.09459999948740005
+Epoch  6, CIFAR-10 Batch 1:  Cost: 2.3036131858825684
+Accuracy: 0.09459999948740005
+Epoch  6, CIFAR-10 Batch 2:  Cost: 2.303828716278076
+Accuracy: 0.09459999948740005
+Epoch  6, CIFAR-10 Batch 3:  Cost: 2.3012168407440186
+Accuracy: 0.10000000149011612
+Epoch  6, CIFAR-10 Batch 4:  Cost: 2.301375389099121
+Accuracy: 0.0997999981045723
+Epoch  6, CIFAR-10 Batch 5:  Cost: 2.303130626678467
+Accuracy: 0.0997999981045723
+Epoch  7, CIFAR-10 Batch 1:  Cost: 2.303375720977783
+Accuracy: 0.0997999981045723
+Epoch  7, CIFAR-10 Batch 2:  Cost: 2.3016228675842285
+Accuracy: 0.0997999981045723
+Epoch  7, CIFAR-10 Batch 3:  Cost: 2.3007655143737793
+Accuracy: 0.0997999981045723
+Epoch  7, CIFAR-10 Batch 4:  Cost: 2.302022933959961
+Accuracy: 0.0997999981045723
+Epoch  7, CIFAR-10 Batch 5:  Cost: 2.302982807159424
+Accuracy: 0.0997999981045723
+Epoch  8, CIFAR-10 Batch 1:  Cost: 2.3030784130096436
+Accuracy: 0.0997999981045723
+Epoch  8, CIFAR-10 Batch 2:  Cost: 2.300743579864502
+Accuracy: 0.10000000149011612
+Epoch  8, CIFAR-10 Batch 3:  Cost: 2.2995409965515137
+Accuracy: 0.0997999981045723
+Epoch  8, CIFAR-10 Batch 4:  Cost: 2.301945924758911
+Accuracy: 0.0997999981045723
+Epoch  8, CIFAR-10 Batch 5:  Cost: 2.3027000427246094
+Accuracy: 0.0997999981045723
+Epoch  9, CIFAR-10 Batch 1:  Cost: 2.303189754486084
+Accuracy: 0.0997999981045723
+Epoch  9, CIFAR-10 Batch 2:  Cost: 2.301342487335205
+Accuracy: 0.10180000215768814
+Epoch  9, CIFAR-10 Batch 3:  Cost: 2.300565719604492
+Accuracy: 0.10180000215768814
+Epoch  9, CIFAR-10 Batch 4:  Cost: 2.3015122413635254
+Accuracy: 0.10000000149011612
+Epoch  9, CIFAR-10 Batch 5:  Cost: 2.3031764030456543
+Accuracy: 0.10180000215768814
+Epoch 10, CIFAR-10 Batch 1:  Cost: 2.301924467086792
+Accuracy: 0.10180000215768814
+Epoch 10, CIFAR-10 Batch 2:  Cost: 2.302293062210083
+Accuracy: 0.10180000215768814
+Epoch 10, CIFAR-10 Batch 3:  Cost: 2.3017220497131348
+Accuracy: 0.10180000215768814
+Epoch 10, CIFAR-10 Batch 4:  Cost: 2.3006789684295654
+Accuracy: 0.09480000287294388
+Epoch 10, CIFAR-10 Batch 5:  Cost: 2.3027873039245605
+Accuracy: 0.09480000287294388
 </pre>
 </div>
 </div>
@@ -13272,7 +13107,7 @@ InvalidArgumentError (see above for traceback): Input to reshape is a tensor wit
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[126]:</div>
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
@@ -13351,38 +13186,809 @@ InvalidArgumentError (see above for traceback): Input to reshape is a tensor wit
 <div class="output_area">
 <div class="prompt"></div>
 
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">OSError</span>                                   Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-126-46737803360c&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">     61</span> 
-<span class="ansi-green-intense-fg ansi-bold">     62</span> 
-<span class="ansi-green-fg">---&gt; 63</span><span class="ansi-red-fg"> </span>test_model<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Testing Accuracy: 0.0978515625
 
-<span class="ansi-green-fg">&lt;ipython-input-126-46737803360c&gt;</span> in <span class="ansi-cyan-fg">test_model</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">     31</span>     <span class="ansi-green-fg">with</span> tf<span class="ansi-blue-fg">.</span>Session<span class="ansi-blue-fg">(</span>graph<span class="ansi-blue-fg">=</span>loaded_graph<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">as</span> sess<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">     32</span>         <span class="ansi-red-fg"># Load model</span>
-<span class="ansi-green-fg">---&gt; 33</span><span class="ansi-red-fg">         </span>loader <span class="ansi-blue-fg">=</span> tf<span class="ansi-blue-fg">.</span>train<span class="ansi-blue-fg">.</span>import_meta_graph<span class="ansi-blue-fg">(</span>save_model_path <span class="ansi-blue-fg">+</span> <span class="ansi-blue-fg">&#39;.meta&#39;</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     34</span>         loader<span class="ansi-blue-fg">.</span>restore<span class="ansi-blue-fg">(</span>sess<span class="ansi-blue-fg">,</span> save_model_path<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     35</span> 
-
-<span class="ansi-green-fg">/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tensorflow/python/training/saver.py</span> in <span class="ansi-cyan-fg">import_meta_graph</span><span class="ansi-blue-fg">(meta_graph_or_file, clear_devices, import_scope, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1568</span>   &#34;&#34;&#34;
-<span class="ansi-green-intense-fg ansi-bold">   1569</span>   <span class="ansi-green-fg">if</span> <span class="ansi-green-fg">not</span> isinstance<span class="ansi-blue-fg">(</span>meta_graph_or_file<span class="ansi-blue-fg">,</span> meta_graph_pb2<span class="ansi-blue-fg">.</span>MetaGraphDef<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">-&gt; 1570</span><span class="ansi-red-fg">     </span>meta_graph_def <span class="ansi-blue-fg">=</span> meta_graph<span class="ansi-blue-fg">.</span>read_meta_graph_file<span class="ansi-blue-fg">(</span>meta_graph_or_file<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1571</span>   <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">   1572</span>     meta_graph_def <span class="ansi-blue-fg">=</span> meta_graph_or_file
-
-<span class="ansi-green-fg">/Users/MS/anaconda/envs/deep_learning/lib/python3.6/site-packages/tensorflow/python/framework/meta_graph.py</span> in <span class="ansi-cyan-fg">read_meta_graph_file</span><span class="ansi-blue-fg">(filename)</span>
-<span class="ansi-green-intense-fg ansi-bold">    400</span>   meta_graph_def <span class="ansi-blue-fg">=</span> meta_graph_pb2<span class="ansi-blue-fg">.</span>MetaGraphDef<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    401</span>   <span class="ansi-green-fg">if</span> <span class="ansi-green-fg">not</span> file_io<span class="ansi-blue-fg">.</span>file_exists<span class="ansi-blue-fg">(</span>filename<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 402</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">raise</span> IOError<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#34;File %s does not exist.&#34;</span> <span class="ansi-blue-fg">%</span> filename<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    403</span>   <span class="ansi-red-fg"># First try to read it as a binary file.</span>
-<span class="ansi-green-intense-fg ansi-bold">    404</span>   file_content <span class="ansi-blue-fg">=</span> file_io<span class="ansi-blue-fg">.</span>read_file_to_string<span class="ansi-blue-fg">(</span>filename<span class="ansi-blue-fg">)</span>
-
-<span class="ansi-red-fg">OSError</span>: File ./image_classification.meta does not exist.</pre>
+</pre>
 </div>
+</div>
+
+<div class="output_area">
+<div class="prompt"></div>
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+8Wd0LTAAXNaieVcI4a+ma8xyeDGzu4HTgV3AM8DJwHdDCO88wH6e9/fR0sFcLCJymPgG/kb84RDC
+15KDZvYV4CPAF4CLZrAfkcmm82drKITw2WkfoRzuPoJPih8FXgXc8Bz7ed7fRxU5FhHZixileBRY
+CxwXQmjm2vqADYABS0III893PyKTTefPVowcE0IYfJ6GK4KZvRqfHB9Q5Him3keVcywisnfnxsdr
+82/EACGEncAtQDfwkhnqR2Sy6f7Z6jCzd5rZJ83sYjM718yK0zhekedqRt5HNTkWEdm7k+Ljw1O0
+PxIfT5yhfkQmm+6frWXAVfifpy8DrgceMbNXPecRikyPGXkf1eRYRGTv+uPjjinak+MDM9SPyGTT
++bP1beA1+AS5BzgN+FtgEPiZmZ3+3IcpctBm5H1UC/JEREQEgBDC5yYdWg1cZGa7gI8BnwXeNNPj
+EplJihyLiOxdEonon6I9OT40Q/2ITDYTP1vfjI+vPIg+RA7WjLyPanIsIrJ3D8XHqXLYToiPU+XA
+TXc/IpPNxM/W5vjYcxB9iBysGXkf1eRYRGTvklqcrzez3d4zY+mglwGjwG0z1I/IZDPxs5Ws/n/8
+IPoQOVgz8j6qybGIyF6EEB4DrsUXJH1gUvPn8EjaVUlNTTMrm9nJsR7nc+5HZH9N18+oma0ysz0i
+w2Y2CFwev3xO2/2KHIjZfh/VJiAiIvvQYrvSNcDZeM3Nh4Fzku1K40TiCeDJyRspHEg/IgdiOn5G
+zeyz+KK7XwJPAjuB44DzgU7gp8CbQgjVGXhJ0mbM7I3AG+OXy4Dz8L9E3BSPbQkh/Gk8d5BZfB/V
+5FhEZD+Y2Urgz4E3AAvxnZh+BHwuhLA9d94gU7ypH0g/IgfqYH9GYx3ji4AXkZVyGwLuxuseXxU0
+aZDnKH74+sxeTkl/Hmf7fVSTYxERERGRSDnHIiIiIiKRJsciIiIiIpEmxyIiIiIikSbHIiIiIiKR
+JsciIiIiIpEmxyIiIiIikSbHIiIiIiKRJsciIiIiIpEmxyIiIiIikSbHIiIiIiKRJsciIiIiIpEm
+xyIiIiIikSbHIiIiIiKRJsciIiIiIpEmxyIiIiIikSbHIiIiIiKRJsciIiIiItH/B8jxxLfsKJ5E
+AAAAAElFTkSuQmCC
+"
+width=355
+height=319
+>
+</div>
+
 </div>
 
 </div>
